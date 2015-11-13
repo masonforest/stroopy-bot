@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/zenazn/goji"
-	"github.com/zenazn/goji/web"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji/web"
 )
 
 func respond(c web.C, w http.ResponseWriter, r *http.Request) {
