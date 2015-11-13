@@ -6,16 +6,16 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji"
-	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji/web"
+	"github.com/zenazn/goji"
+	"github.com/zenazn/goji/web"
 )
 
 func respond(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
+	fmt.Fprintf(w, "Hello, %#v!", c)
 }
 
 func main() {
 	flag.Set("bind", fmt.Sprint(":", os.Getenv("PORT")))
-	goji.Get("/", respond)
+	goji.Post("/", respond)
 	goji.Serve()
 }
