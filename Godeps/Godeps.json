@@ -6,6 +6,10 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/goji/param",
+			"Rev": "da86c81e3e3c23b1948bc7a003d381250a032aa7"
+		},
+		{
 			"ImportPath": "github.com/zenazn/goji",
 			"Comment": "v0.9.0-30-gbe915f8",
 			"Rev": "be915f805dc15907f50100d9b9dc7ad29e197fb8"

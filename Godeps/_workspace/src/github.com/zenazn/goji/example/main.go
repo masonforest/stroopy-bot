@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/goji/param"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/goji/param"
 	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji"
 	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji/web"
 	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji/web/middleware"
