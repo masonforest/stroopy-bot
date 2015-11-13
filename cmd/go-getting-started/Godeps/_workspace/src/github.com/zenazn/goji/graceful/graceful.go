@@ -12,7 +12,7 @@ import (
 	"runtime"
 	"sync/atomic"
 
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/graceful/listener"
+	"github.com/zenazn/goji/graceful/listener"
 )
 
 // WrapListener wraps an arbitrary net.Listener for use with graceful shutdowns.

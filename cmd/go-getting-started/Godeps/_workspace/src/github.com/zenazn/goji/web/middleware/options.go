@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/web"
+	"github.com/zenazn/goji/web"
 )
 
 type autoOptionsState int

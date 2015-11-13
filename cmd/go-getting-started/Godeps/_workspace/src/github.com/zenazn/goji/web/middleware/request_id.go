@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/web"
+	"github.com/zenazn/goji/web"
 )
 
 // Key to use when setting the request ID.

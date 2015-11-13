@@ -16,9 +16,9 @@ import (
 	"time"
 
 	"github.com/goji/param"
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji"
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/web"
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/web/middleware"
+	"github.com/zenazn/goji"
+	"github.com/zenazn/goji/web"
+	"github.com/zenazn/goji/web/middleware"
 )
 
 // Note: the code below cuts a lot of corners to make the example app simple.

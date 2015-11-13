@@ -7,7 +7,7 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/graceful/listener"
+	"github.com/zenazn/goji/graceful/listener"
 )
 
 // This is a slightly hacky shim to disable keepalives when shutting a server
