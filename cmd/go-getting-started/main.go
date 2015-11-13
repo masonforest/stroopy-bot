@@ -1,28 +1,21 @@
 package main
 
 import (
-	"log"
+	"flag"
+	"fmt"
 	"net/http"
 	"os"
 
-	"github.com/heroku/go-getting-started/Godeps/_workspace/src/github.com/gin-gonic/gin"
+	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji"
+	"github.com/masonforest/slackbot/cmd/go-getting-started/Godeps/_workspace/src/github.com/zenazn/goji/web"
 )
 
+func respond(c web.C, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
+}
+
 func main() {
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-
-	router := gin.New()
-	router.Use(gin.Logger())
-	router.LoadHTMLGlob("templates/*.tmpl.html")
-	router.Static("/static", "static")
-
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl.html", nil)
-	})
-
-	router.Run(":" + port)
+	flag.Set("bind", fmt.Sprint(":", os.Getenv("PORT")))
+	goji.Get("/", respond)
+	goji.Serve()
 }

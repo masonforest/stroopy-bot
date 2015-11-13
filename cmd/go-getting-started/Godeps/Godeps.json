@@ -1,0 +1,14 @@
+{
+	"ImportPath": "github.com/masonforest/slackbot/cmd/go-getting-started",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/zenazn/goji",
+			"Comment": "v0.9.0-30-gbe915f8",
+			"Rev": "be915f805dc15907f50100d9b9dc7ad29e197fb8"
+		}
+	]
+}
