@@ -11,7 +11,7 @@ import (
 )
 
 func respond(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %#v!", c)
+	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
 }
 
 func main() {
