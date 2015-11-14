@@ -3,8 +3,8 @@ package slackbot
 import (
 	"flag"
 	"fmt"
-	"github.com/goji/param"
-	"github.com/zenazn/goji"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/goji/param"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji"
 	"io"
 	"net/http"
 	"os"
