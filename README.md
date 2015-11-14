@@ -17,7 +17,7 @@
       }
 
       func (s SimpleBot) Respond(slashCommand slackbot.SlashCommand) string {
-        return fmt.Sprintf("Hello, %s, I'm %s", slashCommand.SlashCommandData.Text, s.command)
+        return fmt.Sprintf("Hello, %s, I'm %s", slashCommand.Data.Text, s.command)
       }
 
       func main() {
