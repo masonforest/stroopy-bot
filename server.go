@@ -26,7 +26,7 @@ type SlashCommandData struct {
 type SlashCommand struct {
 	HTTPResponeWriter http.ResponseWriter
 	HTTPRequest       *http.Request
-	SlashCommandData  SlashCommandData
+	Data              SlashCommandData
 }
 
 type Bot interface {
@@ -56,8 +56,8 @@ func (s Server) ResponseHandler(w http.ResponseWriter, r *http.Request) {
 
 	var slashCommandData SlashCommandData
 
-	slashCommand := SlashCommand{HTTPResponeWriter: w, HTTPRequest: r, SlashCommandData: slashCommandData}
-	err = param.Parse(r.PostForm, &slashCommand.SlashCommandData)
+	slashCommand := SlashCommand{HTTPResponeWriter: w, HTTPRequest: r, Data: slashCommandData}
+	err = param.Parse(r.PostForm, &slashCommand.Data)
 	if err != nil {
 		http.Error(slashCommand.HTTPResponeWriter, "", 500)
 		return
