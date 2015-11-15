@@ -1,1 +1,1 @@
-web: slackbot
+web: stroopybot

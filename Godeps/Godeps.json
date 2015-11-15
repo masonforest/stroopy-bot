@@ -1,7 +1,11 @@
 {
-	"ImportPath": "github.com/masonforest/slackbot",
+	"ImportPath": "github.com/masonforest/stroopybot",
 	"GoVersion": "go1.5",
 	"Deps": [
+		{
+			"ImportPath": "github.com/agl/ed25519",
+			"Rev": "278e1ec8e8a6e017cd07577924d6766039146ced"
+		},
 		{
 			"ImportPath": "github.com/davecgh/go-spew/spew",
 			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
@@ -11,8 +15,40 @@
 			"Rev": "14c555599c2a4f493c1e13fd1ea6fdf721739028"
 		},
 		{
+			"ImportPath": "github.com/masonforest/slackbot",
+			"Rev": "877aaeec12ea057858b1a15293e6d3eb4e2b01e9"
+		},
+		{
+			"ImportPath": "github.com/nullstyle/go-xdr/xdr3",
+			"Rev": "0ed230ab0856542e23b068fa253a67f57f2d01eb"
+		},
+		{
 			"ImportPath": "github.com/pmezard/go-difflib/difflib",
 			"Rev": "d8ed2627bdf02c080bf22230dbb337003b7aba2d"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/crc16",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/hash",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/keypair",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/network",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/strkey",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
+		},
+		{
+			"ImportPath": "github.com/stellar/go-stellar-base/xdr",
+			"Rev": "c8f1db727dfab151b053812d5bbdb584bf56e4af"
 		},
 		{
 			"ImportPath": "github.com/stretchr/testify/assert",
