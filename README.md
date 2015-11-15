@@ -8,20 +8,16 @@
       package main
 
       import (
-        "fmt"
         "github.com/masonforest/slackbot"
+        "fmt"
       )
 
-      type SimpleBot struct {
-        command string
-      }
-
-      func (s SimpleBot) Respond(slashCommand slackbot.SlashCommand) string {
-        return fmt.Sprintf("Hello, %s, I'm %s", slashCommand.Data.Text, s.command)
+      func respond(r slackbot.Request) string {
+        return fmt.Sprintf("Pong %s", r.Data.Text)
       }
 
       func main() {
-        slackbotServer := slackbot.Server{}
-        slackbotServer.AddBot(SimpleBot{command: "simplebot"})
-        slackbotServer.Boot()
+        server := slackbot.NewServer()
+        server.AddCommand("/ping", respond)
+        server.Boot()
       }

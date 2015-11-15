@@ -1,68 +1,99 @@
 package slackbot
 
 import (
-	"flag"
-	"fmt"
-	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/goji/param"
-	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/zenazn/goji"
-	"io"
+  "io"
+  "os"
+  "fmt"
 	"net/http"
-	"os"
+  "bytes"
+  "encoding/json"
+  "github.com/gorilla/schema"
 )
 
-type SlashCommandData struct {
-	Token       string `param:"token"`
-	TeamId      string `param:"team_id"`
-	TeamDomain  string `param:"team_domain"`
-	ChannelId   string `param:"channel_id"`
-	ChannelName string `param:"channel_name"`
-	UserId      string `param:"user_id"`
-	UserName    string `param:"user_name"`
-	Command     string `param:"command"`
-	Text        string `param:"text"`
-	ResponseUrl string `param:"response_url"`
+type RequestData struct {
+	Token       string
+	TeamId      string
+	TeamDomain  string
+	ChannelId   string
+	ChannelName string
+	UserId      string
+	UserName    string
+	Command     string
+	Text        string
+	ResponseUrl string
 }
 
-type SlashCommand struct {
-	HTTPResponeWriter http.ResponseWriter
-	HTTPRequest       *http.Request
-	Data              SlashCommandData
+type Request struct {
+	w     http.ResponseWriter
+	r     *http.Request
+	Data  *RequestData
 }
 
-type Bot interface {
-	Respond(slashCommand SlashCommand) string
+type Response struct {
+  Text string
+}
+
+func (r Response) toString() string {
+  data := map[string]string{"text": r.Text}
+  s, _ := json.Marshal(data);
+  return string(s);
+}
+
+func (s Request) Respond(response Response) {
+  var byteString = []byte(response.toString())
+  req, err := http.NewRequest("POST", s.Data.Text, bytes.NewBuffer(byteString))
+
+  client := &http.Client{}
+  resp, err := client.Do(req)
+  if err != nil {
+      panic(err)
+  }
+  defer resp.Body.Close()
+}
+
+type Command interface {
+	Respond(slashCommand Request) string
 }
 
 type Server struct {
-	bot Bot
+	commands map[string]func(Request) string
 }
 
-func (s *Server) AddBot(bot Bot) {
-	s.bot = bot
+func NewServer() *Server {
+  return &Server{commands: make(map[string]func(Request) string)}
+}
+func (s *Server) AddCommand(name string, command func(Request) string) {
+	s.commands[name] = command
 }
 
-func (s Server) Boot() {
-	flag.Set("bind", fmt.Sprint(":", os.Getenv("PORT")))
-	goji.Post("/", s.ResponseHandler)
-	goji.Serve()
-}
 
-func (s Server) ResponseHandler(w http.ResponseWriter, r *http.Request) {
+func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+  
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, "", 400)
 		return
 	}
 
-	var slashCommandData SlashCommandData
+  data := &RequestData{}
+  decoder := schema.NewDecoder()
 
-	slashCommand := SlashCommand{HTTPResponeWriter: w, HTTPRequest: r, Data: slashCommandData}
-	err = param.Parse(r.PostForm, &slashCommand.Data)
-	if err != nil {
-		http.Error(slashCommand.HTTPResponeWriter, "", 500)
+  err = decoder.Decode(data, r.PostForm)
+  if err != nil {
+		http.Error(w, "", 500)
 		return
 	}
 
-	response := s.bot.Respond(slashCommand)
+	slashCommand := Request{w: w, r: r, Data: data}
+
+	var response string
+  c := s.commands[slashCommand.Data.Command]
+  response = c(slashCommand)
 	io.WriteString(w, response)
 }
+
+func (s Server) Boot() {
+  http.HandleFunc("/", s.ServeHTTP)
+  http.ListenAndServe(fmt.Sprint(":", os.Getenv("PORT")), nil)
+}
+

@@ -1,20 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"github.com/masonforest/slackbot"
+  "fmt"
 )
 
-type Stroopy struct {
-	command string
-}
-
-func (s Stroopy) Respond(slashCommand slackbot.SlashCommand) string {
-	return fmt.Sprintf("Hello, %s, I'm %s", slashCommand.Data.Text, s.command)
+func respond(r slackbot.Request) string {
+  return fmt.Sprintf("Hello %s", r.Data.Text)
 }
 
 func main() {
-	slackbotServer := slackbot.Server{}
-	slackbotServer.AddBot(Stroopy{command: "stroopy"})
-	slackbotServer.Boot()
+	server := slackbot.NewServer()
+	server.AddCommand("/stroopy", respond)
+	server.Boot()
 }
