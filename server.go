@@ -20,7 +20,7 @@ type RequestData struct {
 	UserName    string
 	Command     string
 	Text        string
-	ResponseUrl string
+	ResponseUrl string `schema:"response_url"`
 }
 
 type Request struct {
@@ -33,22 +33,24 @@ type Response struct {
 	Text string
 }
 
+var EmptyResponse = Response{}
+
 func (r Response) toString() string {
 	data := map[string]string{"text": r.Text}
 	s, _ := json.Marshal(data)
 	return string(s)
 }
 
-func (s Request) Respond(response Response) {
-	var byteString = []byte(response.toString())
-	req, err := http.NewRequest("POST", s.Data.Text, bytes.NewBuffer(byteString))
+func (req Request) Respond(resp Response) {
+	var byteString = []byte(resp.toString())
+	post, err := http.NewRequest("POST", req.Data.ResponseUrl, bytes.NewBuffer(byteString))
 
 	client := &http.Client{}
-	resp, err := client.Do(req)
+	pr, err := client.Do(post)
 	if err != nil {
 		panic(err)
 	}
-	defer resp.Body.Close()
+	defer pr.Body.Close()
 }
 
 type Command interface {
