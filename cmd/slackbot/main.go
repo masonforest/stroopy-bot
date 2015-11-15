@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/masonforest/slackbot"
   "fmt"
-  //"time"
+  "time"
 )
 
 func respond(r slackbot.Request) slackbot.Response {
