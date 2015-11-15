@@ -77,7 +77,7 @@ func TestAsyncResponse(t *testing.T) {
 	}
 	res.Body.Close()
 
-	assert.Equal(t, string(response), "{\"text\":\"\"}")
+	assert.Equal(t, string(response), "")
 
 
   select {

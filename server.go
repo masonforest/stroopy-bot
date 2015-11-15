@@ -30,23 +30,39 @@ type Request struct {
 	Data *RequestData
 }
 
+type ResponseType int
+
+const (
+        EMPHEMERAL ResponseType = iota
+        IN_CHANNEL
+)
+
+func (r ResponseType) String() string {
+  m := map[ResponseType]string{
+    IN_CHANNEL: "in_channel",
+    EMPHEMERAL: "ephemeral",
+  }
+  return m[r]
+}
+
 type Response struct {
 	Text string
+  ResponseType ResponseType
 }
 
 var EmptyResponse = Response{}
 
 func (r Response) toString() string {
-  var s string
-
   if(r.Text == ""){
-    s = ""
+    return ""
   } else {
-	  data := map[string]string{"text": r.Text}
+	  data := map[string]string{
+      "text": r.Text,
+      "response_type": r.ResponseType.String(),
+    }
 	  bs, _ := json.Marshal(data)
-    s = string(bs)
+    return string(bs)
   }
-	return s
 }
 
 func (req Request) Respond(resp Response) {
