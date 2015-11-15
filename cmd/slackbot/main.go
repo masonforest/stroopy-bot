@@ -5,8 +5,8 @@ import (
   "fmt"
 )
 
-func respond(r slackbot.Request) string {
-  return fmt.Sprintf("Hello %s", r.Data.Text)
+func respond(r slackbot.Request) slackbot.Response {
+	return slackbot.Response{Text: fmt.Sprintf("Hello %s",r.Data.Text)}
 }
 
 func main() {

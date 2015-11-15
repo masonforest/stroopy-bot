@@ -52,17 +52,17 @@ func (s Request) Respond(response Response) {
 }
 
 type Command interface {
-	Respond(slashCommand Request) string
+	Respond(Request) string
 }
 
 type Server struct {
-	commands map[string]func(Request) string
+	commands map[string]func(Request) Response
 }
 
 func NewServer() *Server {
-	return &Server{commands: make(map[string]func(Request) string)}
+	return &Server{commands: make(map[string]func(Request) Response)}
 }
-func (s *Server) AddCommand(name string, command func(Request) string) {
+func (s *Server) AddCommand(name string, command func(Request) Response) {
 	s.commands[name] = command
 }
 
@@ -83,12 +83,9 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slashCommand := Request{w: w, r: r, Data: data}
+	request := Request{w: w, r: r, Data: data}
 
-	var response string
-	c := s.commands[slashCommand.Data.Command]
-	response = c(slashCommand)
-	io.WriteString(w, response)
+	io.WriteString(w, s.commands[request.Data.Command](request).toString())
 }
 
 func (s Server) Boot() {

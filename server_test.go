@@ -12,8 +12,8 @@ import (
 
 import "testing"
 
-func respond(r slackbot.Request) string {
-	return r.Data.Text
+func respond(r slackbot.Request) slackbot.Response {
+	return slackbot.Response{Text: r.Data.Text}
 }
 
 func TestServer(t *testing.T) {
@@ -35,5 +35,5 @@ func TestServer(t *testing.T) {
 	}
 	res.Body.Close()
 
-	assert.Equal(t, string(response), "test_message\n")
+	assert.Equal(t, string(response), "{\"text\":\"test_message\\n\"}")
 }
