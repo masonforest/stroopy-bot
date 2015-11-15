@@ -21,7 +21,7 @@ func NewAddress(r slackbot.Request) slackbot.Response {
 
   r.Respond(slackbot.Response{
     ResponseType: slackbot.EMPHEMERAL,
-    Text: fmt.Sprintf("Here is your private key. Keep it safe. Anyone you has access to you private key can access your funds: %s", kp.(*keypair.Full).Seed()),
+    Text: fmt.Sprintf("Here is your private key. Keep it safe. Anyone who has access to you private key can access your funds: %s", kp.(*keypair.Full).Seed()),
   })
 
   return slackbot.EmptyResponse
