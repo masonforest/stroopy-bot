@@ -1,49 +1,6 @@
 
-# Slackbot library for golang
+# Stroopy
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+Slackbot for interacting with the stellar network. http://www.stellar.org/
 
-## Example
-
-      package main
-
-      import (
-        "github.com/masonforest/slackbot"
-        "fmt"
-      )
-
-      func respond(r slackbot.Request) string {
-        return fmt.Sprintf("Pong %s", r.Data.Text)
-      }
-
-      func main() {
-        server := slackbot.NewServer()
-        server.AddCommand("/ping", respond)
-        server.Boot()
-      }
-
-# Async Example
-Sometimes commands take time to process. This example shows how you can repond
-to commands asynchronously
-
-    package main
-
-    import (
-      "github.com/masonforest/slackbot"
-      "fmt"
-      "time"
-    )
-
-    func respond(r slackbot.Request) slackbot.Response {
-      go func() {
-        time.Sleep(1 * time.Second)
-        r.Respond(slackbot.Response{Text: fmt.Sprintf("Pong %s",r.Data.Text)})
-      }()
-      return slackbot.EmptyResponse
-    }
-
-    func main() {
-      server := slackbot.NewServer()
-      server.AddCommand("/slowping", respond)
-      server.Boot()
-    }
+<a href="https://slack.com/oauth/authorize?scope=commands&client_id=14592193141.14611292631"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
