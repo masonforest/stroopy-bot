@@ -52,7 +52,7 @@ type Response struct {
 
 var EmptyResponse = Response{}
 
-func (r Response) toString() string {
+func (r Response) String() string {
   if(r.Text == ""){
     return ""
   } else {
@@ -66,7 +66,7 @@ func (r Response) toString() string {
 }
 
 func (req Request) Respond(resp Response) {
-	var byteString = []byte(resp.toString())
+	var byteString = []byte(resp.String())
 	post, err := http.NewRequest("POST", req.Data.ResponseUrl, bytes.NewBuffer(byteString))
 
 	client := &http.Client{}
@@ -111,7 +111,8 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	request := Request{w: w, r: r, Data: data}
 
-	io.WriteString(w, s.commands[request.Data.Command](request).toString())
+  w.Header().Set("Content-Type", "application/json")
+	io.WriteString(w, s.commands[request.Data.Command](request).String())
 }
 
 func (s Server) Boot() {
