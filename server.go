@@ -11,21 +11,22 @@ import (
 )
 
 type RequestData struct {
-	Token       string
-	TeamId      string
-	TeamDomain  string
-	ChannelId   string
-	ChannelName string
-	UserId      string
-	UserName    string
-	Command     string
-	Text        string
+	Token       string `schema:"token"`
+	TeamId      string `schema:"team_id"`
+	TeamDomain  string `schema:"team_domain"`
+	ChannelId   string `schema:"channel_id"`
+	ChannelName string `schema:"channel_name"`
+	UserId      string `schema:"user_id"`
+	UserName    string `schema:"user_name"`
+	Command     string `schema:"command"`
+	Text        string `schema:"text"`
 	ResponseUrl string `schema:"response_url"`
 }
 
 type Request struct {
 	w    http.ResponseWriter
 	r    *http.Request
+
 	Data *RequestData
 }
 
@@ -81,7 +82,7 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = decoder.Decode(data, r.PostForm)
 	if err != nil {
-		http.Error(w, "", 500)
+		http.Error(w, fmt.Sprintf("%#v", err), 500)
 		return
 	}
 
