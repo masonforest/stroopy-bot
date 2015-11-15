@@ -1,18 +1,23 @@
 {
 	"ImportPath": "github.com/masonforest/slackbot",
-	"GoVersion": "go1.5.1",
-	"Packages": [
-		"./..."
-	],
+	"GoVersion": "go1.5",
 	"Deps": [
 		{
-			"ImportPath": "github.com/goji/param",
-			"Rev": "da86c81e3e3c23b1948bc7a003d381250a032aa7"
+			"ImportPath": "github.com/davecgh/go-spew/spew",
+			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
 		},
 		{
-			"ImportPath": "github.com/zenazn/goji",
-			"Comment": "v0.9.0-30-gbe915f8",
-			"Rev": "be915f805dc15907f50100d9b9dc7ad29e197fb8"
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "14c555599c2a4f493c1e13fd1ea6fdf721739028"
+		},
+		{
+			"ImportPath": "github.com/pmezard/go-difflib/difflib",
+			"Rev": "d8ed2627bdf02c080bf22230dbb337003b7aba2d"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Comment": "v1.0-80-g67106a5",
+			"Rev": "67106a5111a06241c8d84952c33214675f51a34a"
 		}
 	]
 }

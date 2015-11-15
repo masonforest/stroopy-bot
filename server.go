@@ -1,13 +1,13 @@
 package slackbot
 
 import (
-  "io"
-  "os"
-  "fmt"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/masonforest/slackbot/Godeps/_workspace/src/github.com/gorilla/schema"
+	"io"
 	"net/http"
-  "bytes"
-  "encoding/json"
-  "github.com/gorilla/schema"
+	"os"
 )
 
 type RequestData struct {
@@ -24,31 +24,31 @@ type RequestData struct {
 }
 
 type Request struct {
-	w     http.ResponseWriter
-	r     *http.Request
-	Data  *RequestData
+	w    http.ResponseWriter
+	r    *http.Request
+	Data *RequestData
 }
 
 type Response struct {
-  Text string
+	Text string
 }
 
 func (r Response) toString() string {
-  data := map[string]string{"text": r.Text}
-  s, _ := json.Marshal(data);
-  return string(s);
+	data := map[string]string{"text": r.Text}
+	s, _ := json.Marshal(data)
+	return string(s)
 }
 
 func (s Request) Respond(response Response) {
-  var byteString = []byte(response.toString())
-  req, err := http.NewRequest("POST", s.Data.Text, bytes.NewBuffer(byteString))
+	var byteString = []byte(response.toString())
+	req, err := http.NewRequest("POST", s.Data.Text, bytes.NewBuffer(byteString))
 
-  client := &http.Client{}
-  resp, err := client.Do(req)
-  if err != nil {
-      panic(err)
-  }
-  defer resp.Body.Close()
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
 }
 
 type Command interface {
@@ -60,26 +60,25 @@ type Server struct {
 }
 
 func NewServer() *Server {
-  return &Server{commands: make(map[string]func(Request) string)}
+	return &Server{commands: make(map[string]func(Request) string)}
 }
 func (s *Server) AddCommand(name string, command func(Request) string) {
 	s.commands[name] = command
 }
 
-
 func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-  
+
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, "", 400)
 		return
 	}
 
-  data := &RequestData{}
-  decoder := schema.NewDecoder()
+	data := &RequestData{}
+	decoder := schema.NewDecoder()
 
-  err = decoder.Decode(data, r.PostForm)
-  if err != nil {
+	err = decoder.Decode(data, r.PostForm)
+	if err != nil {
 		http.Error(w, "", 500)
 		return
 	}
@@ -87,13 +86,12 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	slashCommand := Request{w: w, r: r, Data: data}
 
 	var response string
-  c := s.commands[slashCommand.Data.Command]
-  response = c(slashCommand)
+	c := s.commands[slashCommand.Data.Command]
+	response = c(slashCommand)
 	io.WriteString(w, response)
 }
 
 func (s Server) Boot() {
-  http.HandleFunc("/", s.ServeHTTP)
-  http.ListenAndServe(fmt.Sprint(":", os.Getenv("PORT")), nil)
+	http.HandleFunc("/", s.ServeHTTP)
+	http.ListenAndServe(fmt.Sprint(":", os.Getenv("PORT")), nil)
 }
-
