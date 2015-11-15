@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/masonforest/slackbot"
+	"github.com/masonforest/stroopybot/Godeps/_workspace/src/github.com/masonforest/slackbot"
 )
 
 func Help(r slackbot.Request) slackbot.Response {

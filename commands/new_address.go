@@ -3,7 +3,7 @@ package commands
 import (
   "log"
   "fmt"
-	"github.com/masonforest/slackbot"
+	"github.com/masonforest/stroopybot/Godeps/_workspace/src/github.com/masonforest/slackbot"
   "github.com/stellar/go-stellar-base/keypair"
 )
 
