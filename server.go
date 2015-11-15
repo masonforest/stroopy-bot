@@ -37,9 +37,16 @@ type Response struct {
 var EmptyResponse = Response{}
 
 func (r Response) toString() string {
-	data := map[string]string{"text": r.Text}
-	s, _ := json.Marshal(data)
-	return string(s)
+  var s string
+
+  if(r.Text == ""){
+    s = ""
+  } else {
+	  data := map[string]string{"text": r.Text}
+	  bs, _ := json.Marshal(data)
+    s = string(bs)
+  }
+	return s
 }
 
 func (req Request) Respond(resp Response) {
